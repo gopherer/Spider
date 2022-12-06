@@ -33,13 +33,11 @@ var wg sync.WaitGroup
 func main() {
 	//从命令行中获取网站
 	//baseUrl := os.Args[1]
-
 	baseUrl := "https://www.bizhi88.com/"
 	dirPath := "./temp/"
 	//若目标图片没有后缀格式  使用图片格式png
 	imgFormat := ".png"
 	imgUrl, _ := getImgUrl(baseUrl)
-
 	//imgUrl := []string{"http://img.sccnn.com/bimg/340/03821.jpg"}
 	_ = createDir(dirPath)
 	for index, url := range imgUrl {
@@ -60,16 +58,13 @@ func getImgUrl(baseUrl string) (imgUrl []string, err error) {
 	list := htmlquery.Find(doc, "//img")
 
 	for _, item := range list {
-
 		//imgUrl = append(imgUrl, htmlquery.SelectAttr(item, "src"))
-
 		//对于https://www.bizhi88.com/     图片真是地址位于标签data-original中
 		if temp := htmlquery.SelectAttr(item, "data-original"); temp != "" {
 			//避免某些图片地址位于标签src对于的值    取data-original则会为空值
 			imgUrl = append(imgUrl, temp)
 		}
 	}
-
 	return
 }
 
